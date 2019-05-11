@@ -56,10 +56,10 @@
 			children = (
 				5A6C8C74228735C000538B0C /* AppDelegate.swift */,
 				5A6C8C76228735C000538B0C /* ViewController.swift */,
+				5AD4063E22873EF90007493D /* CanvasView.swift */,
 				5A6C8C7B228735C100538B0C /* Assets.xcassets */,
 				5A6C8C7D228735C100538B0C /* LaunchScreen.storyboard */,
 				5A6C8C80228735C100538B0C /* Info.plist */,
-				5AD4063E22873EF90007493D /* CanvasView.swift */,
 			);
 			path = RayCast2D;
 			sourceTree = "<group>";

@@ -42,13 +42,18 @@ struct Point {
 
 struct Ray {
     let position: CGPoint
-    let angleInDegrees: CGFloat
     
-    private let length = UIScreen.main.bounds.height // Ensure the ray fill the screen.
-    private var angleInRadians: CGFloat {
-        get {
-            return angleInDegrees * .pi / 180
-        }
+    private var length = UIScreen.main.bounds.height // Ensure the ray fill the screen.
+    private var angleInRadians: CGFloat
+    
+    init(position: CGPoint, angleInDegrees: CGFloat) {
+        self.position = position
+        self.angleInRadians = angleInDegrees * .pi / 180
+    }
+    
+    mutating func draw(toPoint p: CGPoint, on ctx: CGContext) {
+        length = position.distance(toPoint: p)
+        draw(on: ctx)
     }
 
     func draw(on ctx: CGContext) {
@@ -58,6 +63,31 @@ struct Ray {
         ctx.addLine(to: CGPoint(x: position.x + sin(angleInRadians) * length,
                                 y: position.y + cos(angleInRadians) * length))
         ctx.strokePath()
+    }
+    
+    func cast(at line: Line) -> CGPoint? {
+        let x1 = line.x1
+        let y1 = line.y1
+        let x2 = line.x2
+        let y2 = line.y2
+        
+        let x3 = position.x
+        let y3 = position.y
+        let x4 = position.x + sin(angleInRadians) * length // May be
+        let y4 = position.y + cos(angleInRadians) * length // May be
+        
+        let denom = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4)
+        if denom == 0 { // Parallel so will never intersect.
+            return nil
+        }
+        
+        let t = ((x1 - x3) * (y3 - y4) - (y1 - y3) * (x3 - x4)) / denom
+        let u = -((x1 - x2) * (y1 - y3) - (y1 - y2) * (x1 - x3)) / denom
+        
+        guard (t > 0) && (t < 1) && (u > 0) else { return nil }
+        
+        return CGPoint(x: x1 + t * (x2 - x1),
+                       y: y1 + t * (y2 - y1))
     }
 }
 
@@ -85,8 +115,8 @@ class CanvasView: UIImageView {
             let cgContext = ctx.cgContext
             
             // Lines
-            for l in self.walls {
-                l.draw(on: cgContext)
+            for w in self.walls {
+                w.draw(on: cgContext)
             }
             
             // Point
@@ -95,8 +125,23 @@ class CanvasView: UIImageView {
                 
                 // Rays
                 for i in 0..<360 {
-                    let ray = Ray(position: p.cgPoint, angleInDegrees: CGFloat(i))
-                    ray.draw(on: cgContext)
+                    var ray = Ray(position: p.cgPoint, angleInDegrees: CGFloat(i))
+                    var closest = CGPoint(x: UIScreen.main.bounds.width*2, y: UIScreen.main.bounds.height*2) // inifinity for all intents and purposes.
+                    var furthest = CGFloat.infinity
+                    
+                    for w in self.walls {
+                        guard let pt = ray.cast(at: w),
+                            let origin = point?.cgPoint
+                            else { continue }
+                        
+                        let dist = origin.distance(toPoint: pt)
+                        if dist < furthest {
+                            furthest = dist
+                            closest = pt
+                        }
+                    }
+                    
+                    ray.draw(toPoint: closest, on: cgContext)
                 }
             }
         }
@@ -106,5 +151,11 @@ class CanvasView: UIImageView {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension CGPoint {
+    func distance(toPoint p: CGPoint) -> CGFloat {
+        return sqrt(pow(x - p.x, 2) + pow(y - p.y, 2))
     }
 }

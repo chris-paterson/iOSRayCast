@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5A6C8C75228735C000538B0C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A6C8C74228735C000538B0C /* AppDelegate.swift */; };
-		5A6C8C77228735C000538B0C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A6C8C76228735C000538B0C /* ViewController.swift */; };
+		5A6C8C77228735C000538B0C /* CanvasViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A6C8C76228735C000538B0C /* CanvasViewController.swift */; };
 		5A6C8C7C228735C100538B0C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5A6C8C7B228735C100538B0C /* Assets.xcassets */; };
 		5A6C8C7F228735C100538B0C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A6C8C7D228735C100538B0C /* LaunchScreen.storyboard */; };
 		5AD4063F22873EF90007493D /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD4063E22873EF90007493D /* CanvasView.swift */; };
@@ -20,7 +20,7 @@
 /* Begin PBXFileReference section */
 		5A6C8C71228735C000538B0C /* RayCast2D.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RayCast2D.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A6C8C74228735C000538B0C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		5A6C8C76228735C000538B0C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		5A6C8C76228735C000538B0C /* CanvasViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasViewController.swift; sourceTree = "<group>"; };
 		5A6C8C7B228735C100538B0C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5A6C8C7E228735C100538B0C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5A6C8C80228735C100538B0C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -60,10 +60,9 @@
 		5A6C8C73228735C000538B0C /* RayCast2D */ = {
 			isa = PBXGroup;
 			children = (
+				5AD40647228778590007493D /* canvas */,
 				5AD406402287752F0007493D /* primatives */,
 				5A6C8C74228735C000538B0C /* AppDelegate.swift */,
-				5A6C8C76228735C000538B0C /* ViewController.swift */,
-				5AD4063E22873EF90007493D /* CanvasView.swift */,
 				5A6C8C7B228735C100538B0C /* Assets.xcassets */,
 				5A6C8C7D228735C100538B0C /* LaunchScreen.storyboard */,
 				5A6C8C80228735C100538B0C /* Info.plist */,
@@ -79,6 +78,15 @@
 				5AD406452287762F0007493D /* Line.swift */,
 			);
 			path = primatives;
+			sourceTree = "<group>";
+		};
+		5AD40647228778590007493D /* canvas */ = {
+			isa = PBXGroup;
+			children = (
+				5A6C8C76228735C000538B0C /* CanvasViewController.swift */,
+				5AD4063E22873EF90007493D /* CanvasView.swift */,
+			);
+			path = canvas;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -152,7 +160,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5AD40642228775D10007493D /* Point.swift in Sources */,
-				5A6C8C77228735C000538B0C /* ViewController.swift in Sources */,
+				5A6C8C77228735C000538B0C /* CanvasViewController.swift in Sources */,
 				5A6C8C75228735C000538B0C /* AppDelegate.swift in Sources */,
 				5AD406462287762F0007493D /* Line.swift in Sources */,
 				5AD4063F22873EF90007493D /* CanvasView.swift in Sources */,

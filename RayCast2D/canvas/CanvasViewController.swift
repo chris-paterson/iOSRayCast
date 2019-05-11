@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  CanvasViewController.swift
 //  RayCast2D
 //
 //  Created by Christopher Paterson on 2019-05-11.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class CanvasViewController: UIViewController {
     var canvasView: CanvasView!
     
     override func viewDidLoad() {

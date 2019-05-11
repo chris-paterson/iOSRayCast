@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         window = UIWindow(frame: UIScreen.main.bounds)
-        let homeViewController = ViewController()
+        let homeViewController = CanvasViewController()
         window!.rootViewController = homeViewController
         window!.makeKeyAndVisible()
         return true

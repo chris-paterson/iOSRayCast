@@ -22,7 +22,8 @@ struct Point {
 
 extension Point {
     func draw(on ctx: CGContext) {
-        UIColor.white.setFill()
+        ctx.setFillColor(UIColor.magenta.cgColor)
         ctx.fillEllipse(in: CGRect(x: x - radius / 2, y: y - radius / 2, width: radius, height: radius))
+        ctx.strokePath()
     }
 }

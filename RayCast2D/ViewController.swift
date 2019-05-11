@@ -28,16 +28,13 @@ class ViewController: UIViewController {
     }
     
     func drawLines() {
-        var localLines = [Line]()
-        for _ in 0..<6 {
+        canvasView.walls = (0..<6).map { _ in
             let x1 = CGFloat.random(in: 0..<view.frame.width)
             let x2 = CGFloat.random(in: 0..<view.frame.width)
             let y1 = CGFloat.random(in: 0..<view.frame.height)
             let y2 = CGFloat.random(in: 0..<view.frame.height)
-            localLines.append(Line(x1: x1, y1: y1, x2: x2, y2: y2))
+            return Line(x1: x1, y1: y1, x2: x2, y2: y2)
         }
-        
-        canvasView.walls = localLines
     }
 }
 

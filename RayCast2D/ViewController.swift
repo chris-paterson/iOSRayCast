@@ -17,12 +17,27 @@ class ViewController: UIViewController {
         
         canvasView = CanvasView(frame: view.frame)
         self.view.addSubview(canvasView)
+        
+        drawLines()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else { return }
         let point = touch.location(in: view)
         canvasView.point = point
+    }
+    
+    func drawLines() {
+        var localLines = [Line]()
+        for i in 0..<6 {
+            let x1 = CGFloat.random(in: 0..<view.frame.width)
+            let x2 = CGFloat.random(in: 0..<view.frame.width)
+            let y1 = CGFloat.random(in: 0..<view.frame.height)
+            let y2 = CGFloat.random(in: 0..<view.frame.height)
+            localLines.append(Line(x1: x1, y1: y1, x2: x2, y2: y2))
+        }
+        
+        canvasView.walls = localLines
     }
 }
 

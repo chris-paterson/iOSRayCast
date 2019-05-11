@@ -8,9 +8,22 @@
 
 import UIKit
 
+struct Line {
+    let x1: CGFloat
+    let y1: CGFloat
+    let x2: CGFloat
+    let y2: CGFloat
+}
+
 class CanvasView: UIImageView {
     let pointRadius: CGFloat = 16
-    var point: CGPoint! {
+    var point: CGPoint? {
+        didSet {
+            draw(self.frame)
+        }
+    }
+    
+    var walls = [Line]() {
         didSet {
             draw(self.frame)
         }
@@ -26,8 +39,20 @@ class CanvasView: UIImageView {
         let img = renderer.image { ctx in
             
             // Draw point.
-            UIColor.white.setFill()
-            ctx.cgContext.fillEllipse(in: CGRect(x: point.x - pointRadius / 2, y: point.y - pointRadius / 2, width: pointRadius, height: pointRadius))
+            if let p = point {
+                UIColor.white.setFill()
+                ctx.cgContext.fillEllipse(in: CGRect(x: p.x - pointRadius / 2, y: p.y - pointRadius / 2, width: pointRadius, height: pointRadius))
+            }
+            
+            
+            // Lines
+            for l in self.walls {
+                ctx.cgContext.setLineWidth(2.0)
+                ctx.cgContext.setStrokeColor(UIColor.red.cgColor)
+                ctx.cgContext.move(to: CGPoint(x: l.x1, y: l.y1))
+                ctx.cgContext.addLine(to: CGPoint(x: l.x2, y: l.y2))
+                ctx.cgContext.strokePath()
+            }
         }
         
         self.image = img

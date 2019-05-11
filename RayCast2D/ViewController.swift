@@ -21,7 +21,7 @@ class ViewController: UIViewController {
         drawLines()
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else { return }
         let point = touch.location(in: view)
         canvasView.point = Point(x: point.x, y: point.y)

@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		5A6C8C75228735C000538B0C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A6C8C74228735C000538B0C /* AppDelegate.swift */; };
 		5A6C8C77228735C000538B0C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A6C8C76228735C000538B0C /* ViewController.swift */; };
-		5A6C8C7A228735C000538B0C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A6C8C78228735C000538B0C /* Main.storyboard */; };
 		5A6C8C7C228735C100538B0C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5A6C8C7B228735C100538B0C /* Assets.xcassets */; };
 		5A6C8C7F228735C100538B0C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A6C8C7D228735C100538B0C /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
@@ -18,7 +17,6 @@
 		5A6C8C71228735C000538B0C /* RayCast2D.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RayCast2D.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A6C8C74228735C000538B0C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5A6C8C76228735C000538B0C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		5A6C8C79228735C000538B0C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5A6C8C7B228735C100538B0C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5A6C8C7E228735C100538B0C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5A6C8C80228735C100538B0C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -56,7 +54,6 @@
 			children = (
 				5A6C8C74228735C000538B0C /* AppDelegate.swift */,
 				5A6C8C76228735C000538B0C /* ViewController.swift */,
-				5A6C8C78228735C000538B0C /* Main.storyboard */,
 				5A6C8C7B228735C100538B0C /* Assets.xcassets */,
 				5A6C8C7D228735C100538B0C /* LaunchScreen.storyboard */,
 				5A6C8C80228735C100538B0C /* Info.plist */,
@@ -124,7 +121,6 @@
 			files = (
 				5A6C8C7F228735C100538B0C /* LaunchScreen.storyboard in Resources */,
 				5A6C8C7C228735C100538B0C /* Assets.xcassets in Resources */,
-				5A6C8C7A228735C000538B0C /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -143,14 +139,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		5A6C8C78228735C000538B0C /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5A6C8C79228735C000538B0C /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		5A6C8C7D228735C100538B0C /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -283,6 +271,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = R8W4J98NNX;
 				INFOPLIST_FILE = RayCast2D/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -300,6 +289,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = R8W4J98NNX;
 				INFOPLIST_FILE = RayCast2D/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

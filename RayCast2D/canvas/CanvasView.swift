@@ -24,6 +24,20 @@ class CanvasView: UIImageView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .black
+        self.isUserInteractionEnabled = true
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        touchesMoved(touches, with: event)
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let touch = touches.first else { return }
+        let touchPoint = touch.location(in: self)
+        
+        if (touchPoint.x > 0) && (touchPoint.x < frame.width) && (touchPoint.y > 0) && (touchPoint.y < frame.height) {
+            point = Point(x: touchPoint.x, y: touchPoint.y)
+        }
     }
     
     override func draw(_ rect: CGRect) {

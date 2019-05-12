@@ -29,20 +29,40 @@ class CanvasView: UIImageView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .black
-        self.isUserInteractionEnabled = true
+        isUserInteractionEnabled = true
+        isMultipleTouchEnabled = true
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         touchesMoved(touches, with: event)
     }
     
+    var adjustingAngle = false
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touch = touches.first else { return }
-        let touchPoint = touch.location(in: self)
-        
-        if (touchPoint.x > 0) && (touchPoint.x < frame.width) && (touchPoint.y > 0) && (touchPoint.y < frame.height) {
-            player = Player(x: touchPoint.x, y: touchPoint.y)
+        if touches.count == 1 && !adjustingAngle {
+            guard let touch = touches.first else { return }
+            let touchPoint = touch.location(in: self)
+            
+            if (touchPoint.x > 0) && (touchPoint.x < frame.width) && (touchPoint.y > 0) && (touchPoint.y < frame.height) {
+                player = Player(x: touchPoint.x, y: touchPoint.y, orientationDeg: player?.orientationDeg ?? 0)
+            }
+        } else if touches.count == 2 {
+            adjustingAngle = true
+            var points = [CGPoint]()
+            for touch in touches {
+                let location = touch.location(in: self)
+                points.append(location)
+            }
+            let angle = 360 - points[0].angle(to: points[1])
+
+            guard let p = player else { return }
+            player = Player(x: p.x, y: p.y, orientationDeg: Int(angle))
         }
+        
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        adjustingAngle = false
     }
     
     override func draw(_ rect: CGRect) {
@@ -75,5 +95,16 @@ class CanvasView: UIImageView {
 extension CGPoint {
     func distance(toPoint p: CGPoint) -> CGFloat {
         return sqrt(pow(x - p.x, 2) + pow(y - p.y, 2))
+    }
+    
+    func angle(to comparisonPoint: CGPoint) -> CGFloat {
+        let originX = comparisonPoint.x - self.x
+        let originY = comparisonPoint.y - self.y
+        let bearingRadians = atan2f(Float(originY), Float(originX))
+        var bearingDegrees = CGFloat(bearingRadians) * 180.0 / .pi
+        while bearingDegrees < 0 {
+            bearingDegrees += 360
+        }
+        return bearingDegrees
     }
 }

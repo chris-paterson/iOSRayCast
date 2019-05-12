@@ -19,19 +19,6 @@ class FirstPersonView: UIImageView {
         draw(self.frame)
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        touchesMoved(touches, with: event)
-    }
-    
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touch = touches.first else { return }
-        let touchPoint = touch.location(in: self)
-        
-        if (touchPoint.x > 0) && (touchPoint.x < frame.width) && (touchPoint.y > 0) && (touchPoint.y < frame.height) {
-//            print(touchPoint)
-        }
-    }
-    
     override func draw(_ rect: CGRect) {
         let renderer = UIGraphicsImageRenderer(size: CGSize(width: frame.width, height: frame.height))
         let img = renderer.image { ctx in
@@ -71,20 +58,5 @@ class FirstPersonView: UIImageView {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-}
-
-extension CGFloat {
-    static func random() -> CGFloat {
-        return CGFloat(arc4random()) / CGFloat(UInt32.max)
-    }
-}
-
-extension UIColor {
-    static func random() -> UIColor {
-        return UIColor(red: .random(),
-                       green: .random(),
-                       blue: .random(),
-                       alpha: 1.0)
     }
 }

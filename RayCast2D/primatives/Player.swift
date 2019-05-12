@@ -13,6 +13,7 @@ struct Player {
     let y: CGFloat
     let rays: [Ray]
     let radius: CGFloat = 8
+    let orientationDeg: Int
     
     var cgPoint: CGPoint {
         get {
@@ -20,11 +21,14 @@ struct Player {
         }
     }
     
-    init(x: CGFloat, y: CGFloat) {
+    init(x: CGFloat, y: CGFloat, orientationDeg: Int) {
         self.x = x
         self.y = y
+        self.orientationDeg = orientationDeg
         
-        self.rays = ((180 + -World.fieldOfView / 2)..<(180 + World.fieldOfView / 2)).map { i in
+        let start = orientationDeg + (-World.fieldOfView / 2)
+        let end = orientationDeg + (World.fieldOfView / 2)
+        self.rays = (start..<end).map { i in
             return Ray(position: CGPoint(x: x, y: y), angleInDegrees: CGFloat(i))
         }
     }

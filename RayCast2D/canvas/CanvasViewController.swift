@@ -10,16 +10,22 @@ import UIKit
 
 class CanvasViewController: UIViewController {
     var canvasView: CanvasView!
+    var firstPersonView: FirstPersonView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white // Need to set or touchesBegan won't work.
         
-        let firstPersonView = FirstPersonView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 2))
-        self.view.addSubview(firstPersonView)
+        firstPersonView = FirstPersonView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height / 2))
+        view.addSubview(firstPersonView)
         
-        canvasView = CanvasView(frame: CGRect(x: 0, y: UIScreen.main.bounds.height / 2, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 2))
-        self.view.addSubview(canvasView)
+        let dividerView = UIView(frame: CGRect(x: 0, y: firstPersonView.frame.height - 2, width: view.frame.width, height: 2))
+        dividerView.backgroundColor = .white
+        firstPersonView.addSubview(dividerView)
+        
+        canvasView = CanvasView(frame: CGRect(x: 0, y: view.frame.height / 2, width: view.frame.width, height: view.frame.height / 2))
+        view.addSubview(canvasView)
+        canvasView.delegate = self
         
         drawLines()
     }
@@ -36,3 +42,8 @@ class CanvasViewController: UIViewController {
     }
 }
 
+extension CanvasViewController: CanvasViewDelegate {
+    func didGetNew(scene: [CGFloat]) {
+        self.firstPersonView.update(scene)
+    }
+}

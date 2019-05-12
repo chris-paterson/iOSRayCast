@@ -9,6 +9,7 @@
 import UIKit
 
 class FirstPersonView: UIImageView {
+    fileprivate var scene = [CGFloat]()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -27,25 +28,45 @@ class FirstPersonView: UIImageView {
         let touchPoint = touch.location(in: self)
         
         if (touchPoint.x > 0) && (touchPoint.x < frame.width) && (touchPoint.y > 0) && (touchPoint.y < frame.height) {
-            print(touchPoint)
+//            print(touchPoint)
         }
     }
     
     override func draw(_ rect: CGRect) {
         let renderer = UIGraphicsImageRenderer(size: CGSize(width: frame.width, height: frame.height))
         let img = renderer.image { ctx in
-            let lineWidth = frame.width / CGFloat(World.fieldOfView)
+            let lineWidth = frame.width / CGFloat(scene.count)
             ctx.cgContext.setLineWidth(lineWidth)
             
-            for i in 0..<World.fieldOfView {
-                ctx.cgContext.setStrokeColor(UIColor.random().cgColor)
-                ctx.cgContext.move(to: CGPoint(x: CGFloat(i) * lineWidth, y: 0))
-                ctx.cgContext.addLine(to: CGPoint(x: CGFloat(i) * lineWidth, y: frame.height))
+            for (i, s) in scene.enumerated() {
+                var whiteComponent: CGFloat = 0.0
+                if s != .infinity {
+                    whiteComponent = 1 - sqrt(s / frame.width)
+                }
+                
+                let height = frame.height - s
+                
+                let color = UIColor(white: whiteComponent, alpha: 1.0)
+                ctx.cgContext.setStrokeColor(color.cgColor)
+                
+                let start = (frame.height / 2) - (height / 2)
+                let end = (frame.height / 2) + (height / 2)
+                
+                ctx.cgContext.move(to: CGPoint(x: CGFloat(i) * lineWidth,
+                                               y: start))
+                
+                ctx.cgContext.addLine(to: CGPoint(x: CGFloat(i) * lineWidth,
+                                                  y: end))
                 ctx.cgContext.strokePath()
             }
         }
         
         self.image = img
+    }
+
+    func update(_ scene: [CGFloat]) {
+        self.scene = scene
+        draw(frame)
     }
     
     required init?(coder aDecoder: NSCoder) {

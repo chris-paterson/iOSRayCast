@@ -8,8 +8,13 @@
 
 import UIKit
 
+protocol CanvasViewDelegate {
+    func didGetNew(scene: [CGFloat])
+}
+
 class CanvasView: UIImageView {
-    var point: Player? {
+    var delegate: CanvasViewDelegate?
+    var player: Player? {
         didSet {
             draw(self.frame)
         }
@@ -36,7 +41,7 @@ class CanvasView: UIImageView {
         let touchPoint = touch.location(in: self)
         
         if (touchPoint.x > 0) && (touchPoint.x < frame.width) && (touchPoint.y > 0) && (touchPoint.y < frame.height) {
-            point = Player(x: touchPoint.x, y: touchPoint.y)
+            player = Player(x: touchPoint.x, y: touchPoint.y)
         }
     }
     
@@ -51,30 +56,12 @@ class CanvasView: UIImageView {
             }
             
             // Point
-            if let p = point {
-                p.draw(on: cgContext)
-                
-                // Rays
-                for i in 0..<World.fieldOfView {
-                    var ray = Ray(position: p.cgPoint, angleInDegrees: CGFloat(i))
-                    var closest = CGPoint(x: UIScreen.main.bounds.width*2, y: UIScreen.main.bounds.height*2) // inifinity for all intents and purposes.
-                    var furthest = CGFloat.infinity
-                    
-                    for w in self.walls {
-                        guard let pt = ray.cast(at: w),
-                            let origin = point?.cgPoint
-                            else { continue }
-                        
-                        let dist = origin.distance(toPoint: pt)
-                        if dist < furthest {
-                            furthest = dist
-                            closest = pt
-                        }
-                    }
-                    
-                    ray.draw(toPoint: closest, on: cgContext)
-                }
-            }
+            guard let p = player else { return }
+            
+            p.draw(on: cgContext)
+            let scene = p.lookAt(walls: self.walls, context: cgContext)
+            
+            delegate?.didGetNew(scene: scene)
         }
         
         self.image = img

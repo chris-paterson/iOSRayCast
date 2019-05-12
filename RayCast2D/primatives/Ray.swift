@@ -12,7 +12,7 @@ struct Ray {
     let position: CGPoint
     
     private var length = UIScreen.main.bounds.height // Ensure the ray fill the screen.
-    private var angleInRadians: CGFloat
+    var angleInRadians: CGFloat
     
     init(position: CGPoint, angleInDegrees: CGFloat) {
         self.position = position

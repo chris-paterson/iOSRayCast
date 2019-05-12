@@ -32,7 +32,7 @@ class FirstPersonView: UIImageView {
                     whiteComponent = 1 - sqrt(s / frame.width)
                 }
                 
-                let height = frame.height - min(s, frame.height)
+                let height = frame.height / min(s, frame.height) * CGFloat(World.fieldOfView / 2)
                 
                 let color = UIColor(white: whiteComponent, alpha: 1.0)
                 

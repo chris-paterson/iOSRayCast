@@ -7,5 +7,5 @@
 //
 
 struct World {
-    static let fieldOfView = 45
+    static let fieldOfView = 80
 }

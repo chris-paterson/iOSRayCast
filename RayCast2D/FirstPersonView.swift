@@ -22,8 +22,9 @@ class FirstPersonView: UIImageView {
     override func draw(_ rect: CGRect) {
         let renderer = UIGraphicsImageRenderer(size: CGSize(width: frame.width, height: frame.height))
         let img = renderer.image { ctx in
+            let cgContext = ctx.cgContext
             let lineWidth = frame.width / CGFloat(scene.count)
-            ctx.cgContext.setLineWidth(lineWidth)
+            cgContext.setLineWidth(lineWidth)
             
             for (i, s) in scene.enumerated() {
                 var whiteComponent: CGFloat = 0.0
@@ -31,20 +32,26 @@ class FirstPersonView: UIImageView {
                     whiteComponent = 1 - sqrt(s / frame.width)
                 }
                 
-                let height = frame.height - s
+                let height = frame.height - min(s, frame.height)
                 
                 let color = UIColor(white: whiteComponent, alpha: 1.0)
-                ctx.cgContext.setStrokeColor(color.cgColor)
                 
                 let start = (frame.height / 2) - (height / 2)
                 let end = (frame.height / 2) + (height / 2)
                 
-                ctx.cgContext.move(to: CGPoint(x: CGFloat(i) * lineWidth,
-                                               y: start))
+                // Ceilings
+                cgContext.drawLine(from: CGPoint(x: CGFloat(i) * lineWidth, y: 0),
+                                   to: CGPoint(x: CGFloat(i) * lineWidth, y: start),
+                                   withColor: UIColor(red:0.17, green:0.24, blue:0.31, alpha:1.0).cgColor)
+                // Floors
+                cgContext.drawLine(from: CGPoint(x: CGFloat(i) * lineWidth, y: end),
+                                   to: CGPoint(x: CGFloat(i) * lineWidth, y: frame.height),
+                                   withColor: UIColor(red:0.58, green:0.65, blue:0.65, alpha:1.0).cgColor)
                 
-                ctx.cgContext.addLine(to: CGPoint(x: CGFloat(i) * lineWidth,
-                                                  y: end))
-                ctx.cgContext.strokePath()
+                // Walls
+                cgContext.drawLine(from: CGPoint(x: CGFloat(i) * lineWidth, y: start),
+                                   to: CGPoint(x: CGFloat(i) * lineWidth, y: end),
+                                   withColor: color.cgColor)
             }
         }
         
@@ -58,5 +65,14 @@ class FirstPersonView: UIImageView {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension CGContext {
+    func drawLine(from start: CGPoint, to end: CGPoint, withColor color: CGColor) {
+        setStrokeColor(color)
+        move(to: start)
+        addLine(to: end)
+        strokePath()
     }
 }

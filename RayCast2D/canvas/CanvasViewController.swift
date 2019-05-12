@@ -15,12 +15,14 @@ class CanvasViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = .white // Need to set or touchesBegan won't work.
         
+        let firstPersonView = FirstPersonView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 2))
+        self.view.addSubview(firstPersonView)
+        
         canvasView = CanvasView(frame: CGRect(x: 0, y: UIScreen.main.bounds.height / 2, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 2))
         self.view.addSubview(canvasView)
         
         drawLines()
     }
-    
     
     
     func drawLines() {

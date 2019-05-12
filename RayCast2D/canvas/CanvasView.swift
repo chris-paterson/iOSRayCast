@@ -9,7 +9,7 @@
 import UIKit
 
 class CanvasView: UIImageView {
-    var point: Point? {
+    var point: Player? {
         didSet {
             draw(self.frame)
         }
@@ -36,7 +36,7 @@ class CanvasView: UIImageView {
         let touchPoint = touch.location(in: self)
         
         if (touchPoint.x > 0) && (touchPoint.x < frame.width) && (touchPoint.y > 0) && (touchPoint.y < frame.height) {
-            point = Point(x: touchPoint.x, y: touchPoint.y)
+            point = Player(x: touchPoint.x, y: touchPoint.y)
         }
     }
     
@@ -55,7 +55,7 @@ class CanvasView: UIImageView {
                 p.draw(on: cgContext)
                 
                 // Rays
-                for i in 0..<360 {
+                for i in 0..<World.fieldOfView {
                     var ray = Ray(position: p.cgPoint, angleInDegrees: CGFloat(i))
                     var closest = CGPoint(x: UIScreen.main.bounds.width*2, y: UIScreen.main.bounds.height*2) // inifinity for all intents and purposes.
                     var furthest = CGFloat.infinity

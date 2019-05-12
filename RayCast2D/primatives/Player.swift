@@ -1,5 +1,5 @@
 //
-//  Point.swift
+//  Player.swift
 //  RayCast2D
 //
 //  Created by Christopher Paterson on 2019-05-11.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct Point {
+struct Player {
     let x: CGFloat
     let y: CGFloat
     let radius: CGFloat = 8
@@ -20,7 +20,7 @@ struct Point {
     }
 }
 
-extension Point {
+extension Player {
     func draw(on ctx: CGContext) {
         ctx.setFillColor(UIColor.magenta.cgColor)
         ctx.fillEllipse(in: CGRect(x: x - radius / 2, y: y - radius / 2, width: radius, height: radius))

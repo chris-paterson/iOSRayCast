@@ -8,7 +8,12 @@
 
 import UIKit
 
+protocol FirstPersonViewDelegate {
+    func didRotatePlayer(withDegreeRotation rotation: CGFloat)
+}
+
 class FirstPersonView: UIImageView {
+    var delegate: FirstPersonViewDelegate?
     fileprivate var scene = [CGFloat]()
     
     override init(frame: CGRect) {
@@ -56,6 +61,18 @@ class FirstPersonView: UIImageView {
         }
         
         self.image = img
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if let delegate = delegate,
+            let touch = touches.first {
+            let location = touch.location(in: self)
+            let boundedLocation = (360 / UIScreen.main.bounds.width) * location.x
+            
+            let scaleFactor: CGFloat = 0.05
+            let rotationAmount = ((UIScreen.main.bounds.width / 2) - boundedLocation) * scaleFactor
+            delegate.didRotatePlayer(withDegreeRotation: rotationAmount)
+        }
     }
 
     func update(_ scene: [CGFloat]) {

@@ -37,32 +37,21 @@ class CanvasView: UIImageView {
         touchesMoved(touches, with: event)
     }
     
-    var adjustingAngle = false
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if touches.count == 1 && !adjustingAngle {
+        if touches.count == 1 {
             guard let touch = touches.first else { return }
             let touchPoint = touch.location(in: self)
             
             if (touchPoint.x > 0) && (touchPoint.x < frame.width) && (touchPoint.y > 0) && (touchPoint.y < frame.height) {
                 player = Player(x: touchPoint.x, y: touchPoint.y, orientationDeg: player?.orientationDeg ?? 0)
             }
-        } else if touches.count == 2 {
-            adjustingAngle = true
-            var points = [CGPoint]()
-            for touch in touches {
-                let location = touch.location(in: self)
-                points.append(location)
-            }
-            let angle = 360 - points[0].angle(to: points[1])
-
-            guard let p = player else { return }
-            player = Player(x: p.x, y: p.y, orientationDeg: Int(angle))
         }
-        
     }
     
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        adjustingAngle = false
+    func didUpdatePlayer(withDegreeRotation rotation: CGFloat) {
+        guard let p = player else { return }
+        
+        player = Player(x: p.x, y: p.y, orientationDeg: p.orientationDeg - Int(rotation))
     }
     
     override func draw(_ rect: CGRect) {

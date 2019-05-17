@@ -22,6 +22,7 @@ class CanvasViewController: UIViewController {
         let dividerView = UIView(frame: CGRect(x: 0, y: firstPersonView.frame.height - 2, width: view.frame.width, height: 2))
         dividerView.backgroundColor = .white
         firstPersonView.addSubview(dividerView)
+        firstPersonView.delegate = self
         
         canvasView = CanvasView(frame: CGRect(x: 0, y: view.frame.height / 2, width: view.frame.width, height: view.frame.height / 2))
         view.addSubview(canvasView)
@@ -47,5 +48,11 @@ class CanvasViewController: UIViewController {
 extension CanvasViewController: CanvasViewDelegate {
     func didGetNew(scene: [CGFloat]) {
         self.firstPersonView.update(scene)
+    }
+}
+
+extension CanvasViewController: FirstPersonViewDelegate {
+    func didRotatePlayer(withDegreeRotation rotation: CGFloat) {
+        self.canvasView.didUpdatePlayer(withDegreeRotation: rotation)
     }
 }
